@@ -12,30 +12,95 @@
   
   <h1>Create Event</h1>
 
-  <select name="names" id="names">
-    <option value="Matt Beres">Matt Beres</option>
-    <option value="2">Name 2</option>
-    <option value="3">Name 3</option>
-    <option value="4">Name 4</option>
-    <option value="5">Name 5</option>
-  </select>
-  <select name="eventTypes" id="eventTypes" onchange="handleEventTypeChange()">
-    <option value="Conference">Conference</option>
-    <option value="Field">Field</option>
-    <option value="Out of Office">Out of Office</option>
-  </select>
-  <select name="locations" id="locations" style="visibility: hidden;">
-    <option value="Location 1">Location 1</option>
-    <option value="Location 2">Location 2</option>
-    <option value="Location 3">Location 3</option>
-    <option value="Location 4">Location 4</option>
-    <option value="Location 5">Location 5</option>
-  </select>
+  <div class="grid">
+    <div>
+      <label for="names">Name:</label>
+    <select name="names" id="names">
+      <option value="Aaron McQuade">Aaron McQuade</option>
+      <option value="Alex Fudge">Alex Fudge</option>
+      <option value="Andrew Dunlop">Andrew Dunlop</option>
+      <option value="Andrew Lebert">Andrew Lebert</option>
+      <option value="Andrew Smith">Andrew Smith</option>
+      <option value="Anthony Walsh">Anthony Walsh</option>
+      <option value="Bethany McCulloh">Bethany McCulloh</option>
+      <option value="Brad Pilon">Brad Pilon</option>
+      <option value="Corey Graveline-Dumouchel">Corey Graveline-Dumouchel</option>
+      <option value="David Priebe">David Priebe</option>
+      <option value="Dean Cybulski">Dean Cybulski</option>
+      <option value="Don White">Don White</option>
+      <option value="Gavin McGinley">Gavin McGinley</option>
+      <option value="Josh Burton">Josh Burton</option>
+      <option value="Justin Lepine">Justin Lepine</option>
+      <option value="Kathy Prescott">Kathy Prescott</option>
+      <option value="Matt Beres">Matt Beres</option>
+      <option value="Michelle Rowe">Michelle Rowe</option>
+      <option value="Mitch Yackobeck">Mitch Yackobeck</option>
+      <option value="Sheri Larochelle">Sheri Larochelle</option>
+      <option value="Terri Lee">Terri Lee</option>
+      <option value="Trevor Smith">Trevor Smith</option>
+    </select>
+  </div>
+    
+  <div>
+    <label for="date">Day:</label>
+    <input type="date" id="date" name="date">
+  </div>
 
-  <!--Add buttons to initiate auth sequence and sign out-->
+  <div>
+    <label for="eventTypes">Event type:</label>
+    <select name="eventTypes" id="eventTypes" onchange="handleEventTypeChange()">
+      <option value="Conference">Conference</option>
+      <option value="Field">Field</option>
+      <option value="Out of Office">Out of Office</option>
+    </select>
+  </div>
+
+    <div>
+      <label for="allDay">All day?</label>
+      <input type="checkbox" id="allDay" name="allDay" value="allDay" checked onchange="handleAllDayChange()">
+    </div>
+
+    <div class="schools" id="locations" style="visibility: hidden;">
+      <label><input type="checkbox" name="ADH" id="ADH" value="ADH"> ADH</label>
+      <label><input type="checkbox" name="ADM" id="ADM" value="ADM"> ADM</label>
+      <label><input type="checkbox" name="AJC" id="AJC" value="AJC"> AJC</label>
+      <label><input type="checkbox" name="BCH" id="BCH" value="BCH"> BCH</label>
+      <label><input type="checkbox" name="CEN" id="CEN" value="CEN"> CEN</label>
+      <label><input type="checkbox" name="CDS" id="CDS" value="CDS"> CDS</label>
+      <label><input type="checkbox" name="COB" id="COB" value="COB"> COB</label>
+      <label><input type="checkbox" name="EGN" id="EGN" value="EGN"> EGN</label>
+      <label><input type="checkbox" name="FHS" id="FHS" value="FHS"> FHS</label>
+      <label><input type="checkbox" name="HRM" id="HRM" value="HRM"> HRM</label>
+      <label><input type="checkbox" name="HVW" id="HVW" value="HVW"> HVW</label>
+      <label><input type="checkbox" name="KIL" id="KIL" value="KIL"> KIL</label>
+      <label><input type="checkbox" name="MCS" id="MCS" value="MCS"> MCS</label>
+      <label><input type="checkbox" name="MCN" id="MCN" value="MCN"> MCN</label>
+      <label><input type="checkbox" name="MHS" id="MHS" value="MHS"> MHS</label>
+      <label><input type="checkbox" name="MVD" id="MVD" value="MVD"> MVD</label>
+      <label><input type="checkbox" name="OHS" id="OHS" value="OHS"> OHS</label>
+      <label><input type="checkbox" name="PAL" id="PAL" value="PAL"> PAL</label>
+      <label><input type="checkbox" name="PVW" id="PVW" value="PVW"> PVW</label>
+      <label><input type="checkbox" name="QEL" id="QEL" value="QEL"> QEL</label>
+      <label><input type="checkbox" name="RCA" id="RCA" value="RCA"> RCA</label>
+      <label><input type="checkbox" name="RCI" id="RCI" value="RCI"> RCI</label>
+      <label><input type="checkbox" name="RCIS" id="RCIS" value="RCIS"> RCIS</label>
+      <label><input type="checkbox" name="RCK" id="RCK" value="RCK"> RCK</label>
+      <label><input type="checkbox" name="VAL" id="VAL" value="VAL"> VAL</label>
+      <label><input type="checkbox" name="WPS" id="WPS" value="WPS"> WPS</label>
+      <label><input type="checkbox" name="WZD" id="WZD" value="WZD"> WZD</label>
+    </div>
+
+    <div id="time" class="time">
+      <label for="startTime">Start time:</label>
+      <input type="time" id="startTime" name="startTime" value="12:00"> <br/>
+      <label for="endTime">End time:</label>
+      <input type="time" id="endTime" name="endTime" value="13:00">
+    </div>
+
+  </div>
+
+
   <button id="authorize_button" onclick="handleAuthClick()">Submit</button>
-  <!-- <button id="signout_button" onclick="handleSignoutClick()">Sign Out</button> -->
-
 
 
 
@@ -64,7 +129,6 @@
     let gisInited = false;
 
     document.getElementById('authorize_button').style.visibility = 'hidden';
-    document.getElementById('signout_button').style.visibility = 'hidden';
 
     /**
      * Callback after api.js is loaded.
@@ -116,7 +180,6 @@
         if (resp.error !== undefined) {
           throw (resp);
         }
-        document.getElementById('authorize_button').innerText = 'Refresh';
         addEvent();
       };
 
@@ -156,12 +219,12 @@
           summary: document.getElementById('names').value + ' - ' + document.getElementById('eventTypes').value,
           description: '',
           start: {
-            dateTime: '2025-05-06T14:00:00-04:00'
-            // date: '2025-05-06'
+            dateTime: document.getElementById('allDay').checked ? null : document.getElementById('date').value + 'T' + document.getElementById('startTime').value + ':00-04:00',
+            date: document.getElementById('allDay').checked ? document.getElementById('date').value : null
           },
           end: {
-            dateTime: '2025-05-06T15:00:00-04:00'
-            // date: '2025-05-06'
+            dateTime: document.getElementById('allDay').checked == true ? null : document.getElementById('date').value + 'T' + document.getElementById('endTime').value + ':00-04:00',
+            date: document.getElementById('allDay').checked == true ? document.getElementById('date').value : null
           },
           attendees: [],
           reminders: {
@@ -181,10 +244,20 @@
     function handleEventTypeChange() {
       const eventType = document.getElementById('eventTypes').value;
       if (eventType == "Field") {
-        console.log("Field event selected");
         document.getElementById('locations').style.visibility = 'visible';
+      } else {
+        document.getElementById('locations').style.visibility = 'hidden';
       }
     
+    }
+
+    function handleAllDayChange() {
+      const allDay = document.getElementById('allDay').checked;
+      if (allDay) {
+        document.getElementById('time').style.visibility = 'hidden';
+      } else {
+        document.getElementById('time').style.visibility = 'visible';
+      }
     }
   </script>
   <script async defer src="https://apis.google.com/js/api.js" onload="gapiLoaded()"></script>

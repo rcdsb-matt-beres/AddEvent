@@ -11,17 +11,53 @@ h1 {
 }
 
 select {
-    display: block;
     margin-left: auto;
     margin-right: auto;
     margin-top: 5px;
-    margin-bottom: 5px;
 }
 
 button {
     display: block;
     margin-left: auto;
     margin-right: auto;
-    margin-top: 0;
+    margin-top: 5px;
     margin-bottom: 0;
+}
+
+input[type="date"] {
+    margin-top: 5px;
+    margin-bottom: 10px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+input[type="checkbox"] {
+    margin-top:10px;
+    margin-bottom: 10px;
+}
+
+.time {
+    visibility: hidden;
+    text-align: right;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.grid {
+    display: grid;
+    grid-template-columns: auto auto;
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+}
+.schools {
+    margin-left: auto;
+    margin-right: auto;
+    display: grid;
+    grid-template-columns: 75px 75px 75px;
+    text-align: left;
+}
+
+input[type="time"] {
+    margin-bottom: 5px;
 }
