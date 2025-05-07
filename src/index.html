@@ -168,7 +168,13 @@
 
 
     function addEvent() {
-      let summaryString = document.getElementById('names').value + ' - ' + document.getElementById('eventTypes').value + (document.getElementById('eventTypes').value == "Field" ? ' (' + getLocations() + ')' : '');
+      let dateLength = document.getElementById('date').value.length;
+      if (dateLength == 0) {
+        alert('ERROR: Please select a date.');
+        return;
+      }
+      let locations = getLocations();
+      let summaryString = document.getElementById('names').value + ' - ' + document.getElementById('eventTypes').value + (document.getElementById('eventTypes').value == "Field" && locations.length > 0 ? ' (' + locations + ')' : '');
       const event = {
         summary: summaryString,
         description: '',
