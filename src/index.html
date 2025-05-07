@@ -15,18 +15,18 @@
   <h1>Create Event</h1>
 
   <div class="grid">
-    <div>
+    <div style="text-align: left;">
       <label for="names">Name:</label>
       <select name="names" id="names">
       </select>
     </div>
 
-    <div>
+    <div style="text-align: right;">
       <label for="date">Day:</label>
       <input type="date" id="date" name="date">
     </div>
 
-    <div>
+    <div style="text-align: left;">
       <label for="eventTypes">Event type:</label>
       <select name="eventTypes" id="eventTypes" onchange="handleEventTypeChange()">
         <option value="Conference">Conference</option>
@@ -35,7 +35,7 @@
       </select>
     </div>
 
-    <div>
+    <div style="text-align: right;">
       <label for="allDay">All day?</label>
       <input type="checkbox" id="allDay" name="allDay" value="allDay" checked onchange="handleAllDayChange()">
     </div>
@@ -44,10 +44,6 @@
     </div>
 
     <div id="time" class="time">
-      <!-- <label for="startTime">Start time:</label>
-      <input type="time" id="startTime" name="startTime" value="12:00"> <br />
-      <label for="endTime">End time:</label>
-      <input type="time" id="endTime" name="endTime" value="13:00"> -->
     </div>
 
   </div>
@@ -80,8 +76,6 @@
     let tokenClient;
     let gapiInited = false;
     let gisInited = false;
-
-    document.getElementById('authorize_button').style.visibility = 'hidden';
 
     /**
      * Callback after api.js is loaded.
@@ -145,27 +139,6 @@
         tokenClient.requestAccessToken({ prompt: '' });
       }
     }
-
-    /**
-     *  Sign out the user upon button click.
-     */
-    function handleSignoutClick() {
-      const token = gapi.client.getToken();
-      if (token !== null) {
-        google.accounts.oauth2.revoke(token.access_token);
-        gapi.client.setToken('');
-        document.getElementById('content').innerText = '';
-        document.getElementById('authorize_button').innerText = 'Authorize';
-        document.getElementById('signout_button').style.visibility = 'hidden';
-      }
-    }
-
-    /**
-     * Print the summary and start datetime/date of the next ten events in
-     * the authorized user's calendar. If no events are found an
-     * appropriate message is printed.
-     */
-
 
     function addEvent() {
       let dateLength = document.getElementById('date').value.length;
@@ -236,7 +209,7 @@
         // Dynamically create and append the start time input
         const startTimeLabel = document.createElement('label');
         startTimeLabel.setAttribute('for', 'startTime');
-        startTimeLabel.textContent = 'Start time:';
+        startTimeLabel.textContent = 'Start time: ';
         timeDiv.appendChild(startTimeLabel);
 
         const startTimeInput = document.createElement('input');
@@ -252,7 +225,7 @@
         // Dynamically create and append the end time input
         const endTimeLabel = document.createElement('label');
         endTimeLabel.setAttribute('for', 'endTime');
-        endTimeLabel.textContent = 'End time:';
+        endTimeLabel.textContent = 'End time: ';
         timeDiv.appendChild(endTimeLabel);
 
         const endTimeInput = document.createElement('input');
@@ -300,6 +273,12 @@
 
     // Call the function after the DOM is fully loaded
     document.addEventListener('DOMContentLoaded', generateDynamicContent);
+
+    document.addEventListener('DOMContentLoaded', () => {
+      const dateInput = document.getElementById('date');
+      const today = new Date().toISOString().split('T')[0]; // Get today's date in YYYY-MM-DD format
+      dateInput.value = today; // Set the default value to today's date
+    });
   </script>
   <script async defer src="https://apis.google.com/js/api.js" onload="gapiLoaded()"></script>
   <script async defer src="https://accounts.google.com/gsi/client" onload="gisLoaded()"></script>

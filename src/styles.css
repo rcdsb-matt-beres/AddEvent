@@ -1,6 +1,6 @@
 html,
 body {
-    height: 100%;
+    /* height: 100%; */
     padding: 0;
     margin: 0;
     font-family: Roboto, Arial, sans-serif;
@@ -8,20 +8,19 @@ body {
 }
 
 h1 {
-    margin: 0;
+    margin-bottom: 20px;
 }
 
 select {
-    margin-left: auto;
-    margin-right: auto;
     margin-top: 5px;
+    margin-bottom: 0px;
 }
 
 button {
     display: block;
     margin-left: auto;
     margin-right: auto;
-    margin-top: 5px;
+    margin-top: 15px;
     margin-bottom: 0;
 }
 
@@ -33,28 +32,25 @@ input[type="date"] {
 }
 
 input[type="checkbox"] {
-    margin-top: 10px;
+    margin-top: 0px;
     margin-bottom: 10px;
 }
+
 
 .time {
     /* visibility: hidden; */
     text-align: right;
-    margin-left: auto;
-    margin-right: auto;
 }
 
 .grid {
     display: grid;
     grid-template-columns: auto auto;
-    max-width: 600px;
+    max-width: 450px;
     margin-left: auto;
     margin-right: auto;
 }
 
 .schools {
-    margin-left: auto;
-    margin-right: auto;
     display: grid;
     grid-template-columns: 75px 75px 75px;
     text-align: left;
