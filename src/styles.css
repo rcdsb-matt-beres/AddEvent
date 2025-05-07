@@ -1,4 +1,5 @@
-html, body {
+html,
+body {
     height: 100%;
     padding: 0;
     margin: 0;
@@ -32,12 +33,12 @@ input[type="date"] {
 }
 
 input[type="checkbox"] {
-    margin-top:10px;
+    margin-top: 10px;
     margin-bottom: 10px;
 }
 
 .time {
-    visibility: hidden;
+    /* visibility: hidden; */
     text-align: right;
     margin-left: auto;
     margin-right: auto;
@@ -50,6 +51,7 @@ input[type="checkbox"] {
     margin-left: auto;
     margin-right: auto;
 }
+
 .schools {
     margin-left: auto;
     margin-right: auto;

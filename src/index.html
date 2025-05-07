@@ -40,14 +40,14 @@
       <input type="checkbox" id="allDay" name="allDay" value="allDay" checked onchange="handleAllDayChange()">
     </div>
 
-    <div class="schools" id="locations" style="visibility: hidden;">
+    <div class="schools" id="locations">
     </div>
 
     <div id="time" class="time">
-      <label for="startTime">Start time:</label>
+      <!-- <label for="startTime">Start time:</label>
       <input type="time" id="startTime" name="startTime" value="12:00"> <br />
       <label for="endTime">End time:</label>
-      <input type="time" id="endTime" name="endTime" value="13:00">
+      <input type="time" id="endTime" name="endTime" value="13:00"> -->
     </div>
 
   </div>
@@ -203,20 +203,63 @@
 
     function handleEventTypeChange() {
       const eventType = document.getElementById('eventTypes').value;
-      if (eventType == "Field") {
-        document.getElementById('locations').style.visibility = 'visible';
-      } else {
-        document.getElementById('locations').style.visibility = 'hidden';
-      }
+      const locationsDiv = document.getElementById('locations');
 
+      // Clear any existing content in the locations div
+      locationsDiv.innerHTML = '';
+
+      if (eventType === "Field") {
+        // Generate location checkboxes dynamically
+        locations.forEach(location => {
+          const label = document.createElement('label');
+          const checkbox = document.createElement('input');
+          checkbox.type = 'checkbox';
+          checkbox.name = location;
+          checkbox.id = location;
+          checkbox.value = location;
+          label.appendChild(checkbox);
+          label.appendChild(document.createTextNode(` ${location}`));
+          locationsDiv.appendChild(label);
+        });
+      }
     }
 
     function handleAllDayChange() {
       const allDay = document.getElementById('allDay').checked;
-      if (allDay) {
-        document.getElementById('time').style.visibility = 'hidden';
-      } else {
-        document.getElementById('time').style.visibility = 'visible';
+      const timeDiv = document.getElementById('time');
+
+      // Clear the time div
+      timeDiv.innerHTML = '';
+
+      if (!allDay) {
+        // Dynamically create and append the start time input
+        const startTimeLabel = document.createElement('label');
+        startTimeLabel.setAttribute('for', 'startTime');
+        startTimeLabel.textContent = 'Start time:';
+        timeDiv.appendChild(startTimeLabel);
+
+        const startTimeInput = document.createElement('input');
+        startTimeInput.type = 'time';
+        startTimeInput.id = 'startTime';
+        startTimeInput.name = 'startTime';
+        startTimeInput.value = '12:00';
+        timeDiv.appendChild(startTimeInput);
+
+        // Add a line break
+        timeDiv.appendChild(document.createElement('br'));
+
+        // Dynamically create and append the end time input
+        const endTimeLabel = document.createElement('label');
+        endTimeLabel.setAttribute('for', 'endTime');
+        endTimeLabel.textContent = 'End time:';
+        timeDiv.appendChild(endTimeLabel);
+
+        const endTimeInput = document.createElement('input');
+        endTimeInput.type = 'time';
+        endTimeInput.id = 'endTime';
+        endTimeInput.name = 'endTime';
+        endTimeInput.value = '13:00';
+        timeDiv.appendChild(endTimeInput);
       }
     }
 
@@ -254,18 +297,18 @@
       });
 
       // Generate location checkboxes
-      const locationsDiv = document.getElementById('locations');
-      locations.forEach(location => {
-        const label = document.createElement('label');
-        const checkbox = document.createElement('input');
-        checkbox.type = 'checkbox';
-        checkbox.name = location;
-        checkbox.id = location;
-        checkbox.value = location;
-        label.appendChild(checkbox);
-        label.appendChild(document.createTextNode(` ${location}`));
-        locationsDiv.appendChild(label);
-      });
+      // const locationsDiv = document.getElementById('locations');
+      // locations.forEach(location => {
+      //   const label = document.createElement('label');
+      //   const checkbox = document.createElement('input');
+      //   checkbox.type = 'checkbox';
+      //   checkbox.name = location;
+      //   checkbox.id = location;
+      //   checkbox.value = location;
+      //   label.appendChild(checkbox);
+      //   label.appendChild(document.createTextNode(` ${location}`));
+      //   locationsDiv.appendChild(label);
+      // });
     }
 
     // Call the function after the DOM is fully loaded
