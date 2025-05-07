@@ -186,6 +186,7 @@
           dateTime: document.getElementById('allDay').checked == true ? null : document.getElementById('date').value + 'T' + document.getElementById('endTime').value + ':00-04:00',
           date: document.getElementById('allDay').checked == true ? document.getElementById('date').value : null
         },
+        colorId: document.getElementById('eventTypes').value == "Field" ? "10" : document.getElementById('eventTypes').value == "Conference" ? "5" : "0",
         attendees: [],
         reminders: {
         },
@@ -295,20 +296,6 @@
         option.textContent = name;
         namesSelect.appendChild(option);
       });
-
-      // Generate location checkboxes
-      // const locationsDiv = document.getElementById('locations');
-      // locations.forEach(location => {
-      //   const label = document.createElement('label');
-      //   const checkbox = document.createElement('input');
-      //   checkbox.type = 'checkbox';
-      //   checkbox.name = location;
-      //   checkbox.id = location;
-      //   checkbox.value = location;
-      //   label.appendChild(checkbox);
-      //   label.appendChild(document.createTextNode(` ${location}`));
-      //   locationsDiv.appendChild(label);
-      // });
     }
 
     // Call the function after the DOM is fully loaded
