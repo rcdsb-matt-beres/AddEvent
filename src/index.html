@@ -1,5 +1,6 @@
 <!doctype html>
 <html lang="en">
+
 <head>
   <meta charset="utf-8">
   <title>Angular</title>
@@ -7,53 +8,32 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="icon" type="image/x-icon" href="favicon.ico">
 </head>
+
 <body>
   <app-root></app-root>
-  
+
   <h1>Create Event</h1>
 
   <div class="grid">
     <div>
       <label for="names">Name:</label>
-    <select name="names" id="names">
-      <option value="Aaron McQuade">Aaron McQuade</option>
-      <option value="Alex Fudge">Alex Fudge</option>
-      <option value="Andrew Dunlop">Andrew Dunlop</option>
-      <option value="Andrew Lebert">Andrew Lebert</option>
-      <option value="Andrew Smith">Andrew Smith</option>
-      <option value="Anthony Walsh">Anthony Walsh</option>
-      <option value="Bethany McCulloh">Bethany McCulloh</option>
-      <option value="Brad Pilon">Brad Pilon</option>
-      <option value="Corey Graveline-Dumouchel">Corey Graveline-Dumouchel</option>
-      <option value="David Priebe">David Priebe</option>
-      <option value="Dean Cybulski">Dean Cybulski</option>
-      <option value="Don White">Don White</option>
-      <option value="Gavin McGinley">Gavin McGinley</option>
-      <option value="Josh Burton">Josh Burton</option>
-      <option value="Justin Lepine">Justin Lepine</option>
-      <option value="Kathy Prescott">Kathy Prescott</option>
-      <option value="Matt Beres">Matt Beres</option>
-      <option value="Michelle Rowe">Michelle Rowe</option>
-      <option value="Mitch Yackobeck">Mitch Yackobeck</option>
-      <option value="Sheri Larochelle">Sheri Larochelle</option>
-      <option value="Terri Lee">Terri Lee</option>
-      <option value="Trevor Smith">Trevor Smith</option>
-    </select>
-  </div>
-    
-  <div>
-    <label for="date">Day:</label>
-    <input type="date" id="date" name="date">
-  </div>
+      <select name="names" id="names">
+      </select>
+    </div>
 
-  <div>
-    <label for="eventTypes">Event type:</label>
-    <select name="eventTypes" id="eventTypes" onchange="handleEventTypeChange()">
-      <option value="Conference">Conference</option>
-      <option value="Field">Field</option>
-      <option value="Out of Office">Out of Office</option>
-    </select>
-  </div>
+    <div>
+      <label for="date">Day:</label>
+      <input type="date" id="date" name="date">
+    </div>
+
+    <div>
+      <label for="eventTypes">Event type:</label>
+      <select name="eventTypes" id="eventTypes" onchange="handleEventTypeChange()">
+        <option value="Conference">Conference</option>
+        <option value="Field">Field</option>
+        <option value="Out of Office">Out of Office</option>
+      </select>
+    </div>
 
     <div>
       <label for="allDay">All day?</label>
@@ -61,38 +41,11 @@
     </div>
 
     <div class="schools" id="locations" style="visibility: hidden;">
-      <label><input type="checkbox" name="ADH" id="ADH" value="ADH"> ADH</label>
-      <label><input type="checkbox" name="ADM" id="ADM" value="ADM"> ADM</label>
-      <label><input type="checkbox" name="AJC" id="AJC" value="AJC"> AJC</label>
-      <label><input type="checkbox" name="BCH" id="BCH" value="BCH"> BCH</label>
-      <label><input type="checkbox" name="CEN" id="CEN" value="CEN"> CEN</label>
-      <label><input type="checkbox" name="CDS" id="CDS" value="CDS"> CDS</label>
-      <label><input type="checkbox" name="COB" id="COB" value="COB"> COB</label>
-      <label><input type="checkbox" name="EGN" id="EGN" value="EGN"> EGN</label>
-      <label><input type="checkbox" name="FHS" id="FHS" value="FHS"> FHS</label>
-      <label><input type="checkbox" name="HRM" id="HRM" value="HRM"> HRM</label>
-      <label><input type="checkbox" name="HVW" id="HVW" value="HVW"> HVW</label>
-      <label><input type="checkbox" name="KIL" id="KIL" value="KIL"> KIL</label>
-      <label><input type="checkbox" name="MCS" id="MCS" value="MCS"> MCS</label>
-      <label><input type="checkbox" name="MCN" id="MCN" value="MCN"> MCN</label>
-      <label><input type="checkbox" name="MHS" id="MHS" value="MHS"> MHS</label>
-      <label><input type="checkbox" name="MVD" id="MVD" value="MVD"> MVD</label>
-      <label><input type="checkbox" name="OHS" id="OHS" value="OHS"> OHS</label>
-      <label><input type="checkbox" name="PAL" id="PAL" value="PAL"> PAL</label>
-      <label><input type="checkbox" name="PVW" id="PVW" value="PVW"> PVW</label>
-      <label><input type="checkbox" name="QEL" id="QEL" value="QEL"> QEL</label>
-      <label><input type="checkbox" name="RCA" id="RCA" value="RCA"> RCA</label>
-      <label><input type="checkbox" name="RCI" id="RCI" value="RCI"> RCI</label>
-      <label><input type="checkbox" name="RCIS" id="RCIS" value="RCIS"> RCIS</label>
-      <label><input type="checkbox" name="RCK" id="RCK" value="RCK"> RCK</label>
-      <label><input type="checkbox" name="VAL" id="VAL" value="VAL"> VAL</label>
-      <label><input type="checkbox" name="WPS" id="WPS" value="WPS"> WPS</label>
-      <label><input type="checkbox" name="WZD" id="WZD" value="WZD"> WZD</label>
     </div>
 
     <div id="time" class="time">
       <label for="startTime">Start time:</label>
-      <input type="time" id="startTime" name="startTime" value="12:00"> <br/>
+      <input type="time" id="startTime" name="startTime" value="12:00"> <br />
       <label for="endTime">End time:</label>
       <input type="time" id="endTime" name="endTime" value="13:00">
     </div>
@@ -186,10 +139,10 @@
       if (gapi.client.getToken() === null) {
         // Prompt the user to select a Google Account and ask for consent to share their data
         // when establishing a new session.
-        tokenClient.requestAccessToken({prompt: 'consent'});
+        tokenClient.requestAccessToken({ prompt: 'consent' });
       } else {
         // Skip display of account chooser and consent dialog for an existing session.
-        tokenClient.requestAccessToken({prompt: ''});
+        tokenClient.requestAccessToken({ prompt: '' });
       }
     }
 
@@ -212,31 +165,32 @@
      * the authorized user's calendar. If no events are found an
      * appropriate message is printed.
      */
-    
+
 
     function addEvent() {
+      let summaryString = document.getElementById('names').value + ' - ' + document.getElementById('eventTypes').value + (document.getElementById('eventTypes').value == "Field" ? ' (' + getLocations() + ')' : '');
       const event = {
-          summary: document.getElementById('names').value + ' - ' + document.getElementById('eventTypes').value,
-          description: '',
-          start: {
-            dateTime: document.getElementById('allDay').checked ? null : document.getElementById('date').value + 'T' + document.getElementById('startTime').value + ':00-04:00',
-            date: document.getElementById('allDay').checked ? document.getElementById('date').value : null
-          },
-          end: {
-            dateTime: document.getElementById('allDay').checked == true ? null : document.getElementById('date').value + 'T' + document.getElementById('endTime').value + ':00-04:00',
-            date: document.getElementById('allDay').checked == true ? document.getElementById('date').value : null
-          },
-          attendees: [],
-          reminders: {
-          },
-        };
+        summary: summaryString,
+        description: '',
+        start: {
+          dateTime: document.getElementById('allDay').checked ? null : document.getElementById('date').value + 'T' + document.getElementById('startTime').value + ':00-04:00',
+          date: document.getElementById('allDay').checked ? document.getElementById('date').value : null
+        },
+        end: {
+          dateTime: document.getElementById('allDay').checked == true ? null : document.getElementById('date').value + 'T' + document.getElementById('endTime').value + ':00-04:00',
+          date: document.getElementById('allDay').checked == true ? document.getElementById('date').value : null
+        },
+        attendees: [],
+        reminders: {
+        },
+      };
 
       const request = gapi.client.calendar.events.insert({
         calendarId: 'c_f049b179cd81305d0df146197f30755153a65542312c9c86ad719559138b61c6@group.calendar.google.com',
         resource: event,
       });
 
-      request.execute(function(event) {
+      request.execute(function (event) {
         console.log('Event created: ' + event.htmlLink);
       });
     }
@@ -248,7 +202,7 @@
       } else {
         document.getElementById('locations').style.visibility = 'hidden';
       }
-    
+
     }
 
     function handleAllDayChange() {
@@ -259,8 +213,60 @@
         document.getElementById('time').style.visibility = 'visible';
       }
     }
+
+    function getLocations() {
+      const checkboxes = document.querySelectorAll('input[type="checkbox"]:checked');
+      const selectedLocations = Array.from(checkboxes)
+        .filter(checkbox => checkbox.id !== 'allDay') // Exclude the allDay checkbox
+        .map(checkbox => checkbox.value);
+      return selectedLocations.join(', ');
+    }
+  </script>
+  <script>
+    const names = [
+      "Aaron McQuade", "Alex Fudge", "Andrew Dunlop", "Andrew Lebert", "Andrew Smith",
+      "Anthony Walsh", "Bethany McCulloch", "Brad Pilon", "Corey Graveline-Dumouchel",
+      "David Priebe", "Dean Cybulski", "Don White", "Gavin McGinley", "Josh Burton",
+      "Justin Lepine", "Kathy Prescott", "Matt Beres", "Michelle Rowe", "Mitch Yackobeck",
+      "Sheri Larochelle", "Terri Lee", "Trevor Smith"
+    ];
+
+    const locations = [
+      "ADH", "ADM", "AJC", "BCH", "CEN", "CDS", "COB", "EGN", "FHS", "HRM",
+      "HVW", "KIL", "MCS", "MCN", "MHS", "MVD", "OHS", "PAL", "PVW", "QEL",
+      "RCA", "RCI", "RCIS", "RCK", "VAL", "WPS", "WZD"
+    ];
+
+    function generateDynamicContent() {
+      // Generate names dropdown options
+      const namesSelect = document.getElementById('names');
+      names.forEach(name => {
+        const option = document.createElement('option');
+        option.value = name;
+        option.textContent = name;
+        namesSelect.appendChild(option);
+      });
+
+      // Generate location checkboxes
+      const locationsDiv = document.getElementById('locations');
+      locations.forEach(location => {
+        const label = document.createElement('label');
+        const checkbox = document.createElement('input');
+        checkbox.type = 'checkbox';
+        checkbox.name = location;
+        checkbox.id = location;
+        checkbox.value = location;
+        label.appendChild(checkbox);
+        label.appendChild(document.createTextNode(` ${location}`));
+        locationsDiv.appendChild(label);
+      });
+    }
+
+    // Call the function after the DOM is fully loaded
+    document.addEventListener('DOMContentLoaded', generateDynamicContent);
   </script>
   <script async defer src="https://apis.google.com/js/api.js" onload="gapiLoaded()"></script>
   <script async defer src="https://accounts.google.com/gsi/client" onload="gisLoaded()"></script>
 </body>
+
 </html>
