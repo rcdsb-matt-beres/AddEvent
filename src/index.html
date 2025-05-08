@@ -10,23 +10,19 @@
 </head>
 
 <body>
-  <app-root></app-root>
+
+  <a href="https://rcdsb-matt-beres.github.io/Chart-Website/" class="back">← Back</a>
 
   <h1>Create Event</h1>
 
   <div class="grid">
-    <div style="text-align: left;">
+    <div style="text-align: left; margin-bottom: 5px;">
       <label for="names">Name:</label>
       <select name="names" id="names">
       </select>
     </div>
 
-    <div style="text-align: right;">
-      <label for="date">Day:</label>
-      <input type="date" id="date" name="date">
-    </div>
-
-    <div style="text-align: left;">
+    <div style="text-align: left; margin-bottom: 5px;">
       <label for="eventTypes">Event type:</label>
       <select name="eventTypes" id="eventTypes" onchange="handleEventTypeChange()">
         <option value="Conference">Conference</option>
@@ -35,12 +31,17 @@
       </select>
     </div>
 
-    <div style="text-align: right;">
-      <label for="allDay">All day?</label>
-      <input type="checkbox" id="allDay" name="allDay" value="allDay" checked onchange="handleAllDayChange()">
+    <div class="schools" id="locations">
     </div>
 
-    <div class="schools" id="locations">
+    <div style="text-align: left;">
+      <label for="date">Day:</label>
+      <input type="date" id="date" name="date">
+    </div>
+
+    <div style="text-align: left;">
+      <label for="allDay">All day?</label>
+      <input type="checkbox" id="allDay" name="allDay" value="allDay" checked onchange="handleAllDayChange()">
     </div>
 
     <div id="time" class="time">
@@ -183,6 +184,7 @@
       locationsDiv.innerHTML = '';
 
       if (eventType === "Field") {
+        locationsDiv.style.marginTop = '10px';
         // Generate location checkboxes dynamically
         locations.forEach(location => {
           const label = document.createElement('label');
@@ -278,7 +280,31 @@
       const dateInput = document.getElementById('date');
       const today = new Date().toISOString().split('T')[0]; // Get today's date in YYYY-MM-DD format
       dateInput.value = today; // Set the default value to today's date
+      getSeason();
     });
+
+
+    checkDate = new Date();
+    currMonth = checkDate.getMonth() + 1;
+    currSeason = "";
+
+    function getSeason() {
+      const body = document.body;
+
+      // Remove any existing season class
+      body.classList.remove('Winter', 'Spring', 'Summer', 'Fall');
+
+      // Determine the current season and set it as the class of the body
+      if (this.currMonth == 12 || this.currMonth <= 2) {
+        body.classList.add('winter');
+      } else if (this.currMonth >= 3 && this.currMonth <= 5) {
+        body.classList.add('spring');
+      } else if (this.currMonth >= 6 && this.currMonth <= 8) {
+        body.classList.add('summer');
+      } else if (this.currMonth >= 9 && this.currMonth <= 11) {
+        body.classList.add('fall');
+      }
+    }
   </script>
   <script async defer src="https://apis.google.com/js/api.js" onload="gapiLoaded()"></script>
   <script async defer src="https://accounts.google.com/gsi/client" onload="gisLoaded()"></script>
