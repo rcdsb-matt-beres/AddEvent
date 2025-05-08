@@ -10,7 +10,7 @@
 </head>
 
 <body>
-
+  <app-root></app-root>
   <a href="https://rcdsb-matt-beres.github.io/Chart-Website/" class="back">← Back</a>
 
   <h1>Create Event</h1>
@@ -27,6 +27,7 @@
       <select name="eventTypes" id="eventTypes" onchange="handleEventTypeChange()">
         <option value="Conference">Conference</option>
         <option value="Field">Field</option>
+        <option value="Out">Out</option>
         <option value="Out of Office">Out of Office</option>
       </select>
     </div>
@@ -72,7 +73,7 @@
 
     // Authorization scopes required by the API; multiple scopes can be
     // included, separated by spaces.
-    const SCOPES = 'https://www.googleapis.com/auth/calendar';
+    const SCOPES = 'https://www.googleapis.com/auth/calendar.events';
 
     let tokenClient;
     let gapiInited = false;
@@ -160,7 +161,7 @@
           dateTime: document.getElementById('allDay').checked == true ? null : document.getElementById('date').value + 'T' + document.getElementById('endTime').value + ':00-04:00',
           date: document.getElementById('allDay').checked == true ? document.getElementById('date').value : null
         },
-        colorId: document.getElementById('eventTypes').value == "Field" ? "10" : document.getElementById('eventTypes').value == "Conference" ? "5" : "0",
+        colorId: document.getElementById('eventTypes').value == "Field" ? "10" : document.getElementById('eventTypes').value == "Conference" ? "5" : document.getElementById('eventTypes').value == "Out" ? "0" : "6",
         attendees: [],
         reminders: {
         },
@@ -258,7 +259,7 @@
 
     const locations = [
       "ADH", "ADM", "AJC", "BCH", "CEN", "CDS", "COB", "EGN", "FHS", "HRM",
-      "HVW", "KIL", "MCS", "MCN", "MHS", "MVD", "OHS", "PAL", "PVW", "QEL",
+      "HVW", "KIL", "MAR", "MCS", "MCN", "MVD", "OHS", "PAL", "PVW", "QEL",
       "RCA", "RCI", "RCIS", "RCK", "VAL", "WPS", "WZD"
     ];
 
@@ -274,26 +275,24 @@
     }
 
     // Call the function after the DOM is fully loaded
-    document.addEventListener('DOMContentLoaded', generateDynamicContent);
 
     document.addEventListener('DOMContentLoaded', () => {
+      getSeason();
+      generateDynamicContent()
       const dateInput = document.getElementById('date');
       const today = new Date().toISOString().split('T')[0]; // Get today's date in YYYY-MM-DD format
       dateInput.value = today; // Set the default value to today's date
-      getSeason();
     });
 
 
     checkDate = new Date();
     currMonth = checkDate.getMonth() + 1;
-    currSeason = "";
 
     function getSeason() {
       const body = document.body;
 
       // Remove any existing season class
-      body.classList.remove('Winter', 'Spring', 'Summer', 'Fall');
-
+      body.classList.remove('winter', 'spring', 'summer', 'fall');
       // Determine the current season and set it as the class of the body
       if (this.currMonth == 12 || this.currMonth <= 2) {
         body.classList.add('winter');
