@@ -27,6 +27,7 @@
       <select name="eventTypes" id="eventTypes" onchange="handleEventTypeChange()">
         <option value="Conference">Conference</option>
         <option value="Field">Field</option>
+        <option value="Meeting">Meeting</option>
         <option value="Off">Off</option>
         <option value="Out of Office">Out of Office</option>
         <option value="Remote">Remote</option>
@@ -162,7 +163,7 @@
           dateTime: document.getElementById('allDay').checked == true ? null : document.getElementById('date').value + 'T' + document.getElementById('endTime').value + ':00-04:00',
           date: document.getElementById('allDay').checked == true ? document.getElementById('date').value : null
         },
-        colorId: document.getElementById('eventTypes').value == "Field" ? "10" : document.getElementById('eventTypes').value == "Conference" ? "5" : document.getElementById('eventTypes').value == "Off" ? "0" : "6",
+        colorId: document.getElementById('eventTypes').value == "Field" ? "10" : document.getElementById('eventTypes').value == "Conference" ? "5" : document.getElementById('eventTypes').value == "Off" ? "0" : document.getElementById('eventTypes').value == "Remote" ? "9" : document.getElementById('eventTypes').value == "Meeting" ? "3" : "6",
         attendees: [],
         reminders: {
         },
