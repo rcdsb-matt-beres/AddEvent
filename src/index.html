@@ -59,9 +59,207 @@
 
   <pre id="content" style="white-space: pre-wrap;"></pre>
 
-  <!-- Stole all this gapi stuff from the internet to get the API to work... All lines 65 to 146 are essentially magic -->
-
   <script type="text/javascript">
+    //Add peoples names here (preferably alphabetically), hyphens and all, just make sure they're accounted for in /Chart-Website/
+    const names = [
+      "Aaron McQuade",
+      "Alex Fudge",
+      "Andrew Dunlop",
+      "Andrew Lebert",
+      "Andrew Smith",
+      "Anthony Walsh",
+      "Bethany McCulloch",
+      "Brad Pilon",
+      "Corey Graveline-Dumouchel",
+      "Chris Waito",
+      "Dan Schinkel",
+      "David Priebe",
+      "Dean Cybulski",
+      "Gavin McGinley",
+      "Josh Burton",
+      "Josh Yourth",
+      "Justin Lepine",
+      "Kathy Prescott",
+      "Matt Beres",
+      "Michelle Rowe",
+      "Mitch Yackobeck",
+      "Natalie Blank-Cazabon",
+      "Sheri Larochelle",
+      "Terri-Lyn Lee",
+      "Trevor Smith",
+      "Tyler Lloyd-Gallan"
+    ];
+
+    const locations = [
+      "ADH", "ADM", "AJC", "BCH", "CEN", "CDS", "COB", "EGN", "FHS", "HRM",
+      "HVW", "KIL", "MAR", "MCS", "MCN", "MVD", "OHS", "PAL", "PVW", "QEL",
+      "RCA", "RCI", "RCIS", "RCK", "VAL", "WPS", "WZD"
+    ];
+
+    // Start calling the functions after the DOM is fully loaded
+    document.addEventListener('DOMContentLoaded', () => {
+      getSeason();
+      generateDynamicContent()
+      const dateInput = document.getElementById('date');
+      const today = new Date().toISOString().split('T')[0]; // Get today's date in YYYY-MM-DD format
+      dateInput.value = today; // Set the default value to today's date
+    });
+
+    // This function determines what background should appear based on the current month
+    function getSeason() {
+      const body = document.body;
+      let checkDate = new Date();
+      let currMonth = checkDate.getMonth() + 1;
+
+      // Remove any existing season class (just in case)
+      body.classList.remove('winter', 'spring', 'summer', 'fall');
+
+      // Determine the current season and set it as the class of the body
+      if (currMonth == 12 || currMonth <= 2) {
+        body.classList.add('winter');
+      } else if (currMonth >= 3 && currMonth <= 5) {
+        body.classList.add('spring');
+      } else if (currMonth >= 6 && currMonth <= 8) {
+        body.classList.add('summer');
+      } else if (currMonth >= 9 && currMonth <= 11) {
+        body.classList.add('fall');
+      }
+    }
+
+    // This function generates the dynamic content for the names dropdown
+    function generateDynamicContent() {
+      // Generate names dropdown options
+      const namesSelect = document.getElementById('names');
+      names.forEach(name => {
+        const option = document.createElement('option');
+        option.value = name;
+        option.textContent = name;
+        namesSelect.appendChild(option);
+      });
+    }
+
+    //Made by Matt to add an event to the calendar, using form inputs to create and post the event using the API
+    function addEvent() {
+      //Validate date input
+      let dateLength = document.getElementById('date').value.length;
+      if (dateLength == 0) {
+        alert('ERROR: Please select a date.');
+        return;
+      }
+
+      //For Field events, get the checked checkboxes and create a string of locations
+      let locations = getLocations();
+
+      //Formats string for the summary of the event so that /Chart-Website/ can parse it correctly
+      let summaryString = document.getElementById('names').value + ' - ' + document.getElementById('eventTypes').value + (document.getElementById('eventTypes').value == "Field" && locations.length > 0 ? ' (' + locations + ')' : '');
+
+      //Create event obj, colorId is *supposed* to match the color of the event text on Chart-Website...
+      //Date formatting is done in the format YYYY-MM-DDTHH:MM:SS-04:00 for start and end times, or just YYYY-MM-DD for all day events
+      const event = {
+        summary: summaryString,
+        description: '',
+        start: {
+          dateTime: document.getElementById('allDay').checked ? null : new Date(`${document.getElementById('date').value}T${document.getElementById('startTime').value}:00-04:00`).toISOString(),
+          date: document.getElementById('allDay').checked ? document.getElementById('date').value : null
+        },
+        end: {
+          dateTime: document.getElementById('allDay').checked == true ? null : new Date(`${document.getElementById('date').value}T${document.getElementById('endTime').value}:00-04:00`).toISOString(),
+          date: document.getElementById('allDay').checked == true ? document.getElementById('date').value : null
+        },
+        colorId: document.getElementById('eventTypes').value == "Field" ? "10" : document.getElementById('eventTypes').value == "Conference" ? "5" : document.getElementById('eventTypes').value == "Off" ? "0" : document.getElementById('eventTypes').value == "Remote" ? "9" : document.getElementById('eventTypes').value == "Meeting" ? "3" : document.getElementById('eventTypes').value == "Training" ? "2" : "6",
+        attendees: [],
+        reminders: {
+        },
+      };
+
+      //Create API call 
+      const request = gapi.client.calendar.events.insert({
+        calendarId: 'c_a45d8e966d0c7524b6f84ea21df86b3d87f3575b107347c56451886b52f8a83a@group.calendar.google.com',
+        resource: event,
+      });
+
+      //Execute the API call and log the result
+      request.execute(function (event) {
+        console.log('Event created: ' + event.htmlLink);
+      });
+    }
+
+    //This is for field locations, it gets the checked checkboxes and returns a string of the selected locations
+    function getLocations() {
+      const checkboxes = document.querySelectorAll('input[type="checkbox"]:checked');
+      const selectedLocations = Array.from(checkboxes)
+        .filter(checkbox => checkbox.id !== 'allDay') // Exclude the allDay checkbox
+        .map(checkbox => checkbox.value);
+      return selectedLocations.join(', ');
+    }
+
+    //This dynamically updates screen elements based on the selected event type (mainly for Field event)
+    function handleEventTypeChange() {
+      const eventType = document.getElementById('eventTypes').value;
+      const locationsDiv = document.getElementById('locations');
+
+      // Clear any existing content in the locations div
+      locationsDiv.innerHTML = '';
+
+      if (eventType === "Field") {
+        locationsDiv.style.marginTop = '10px';
+        // Generate location checkboxes dynamically
+        locations.forEach(location => {
+          const label = document.createElement('label');
+          const checkbox = document.createElement('input');
+          checkbox.type = 'checkbox';
+          checkbox.name = location;
+          checkbox.id = location;
+          checkbox.value = location;
+          label.appendChild(checkbox);
+          label.appendChild(document.createTextNode(` ${location}`));
+          locationsDiv.appendChild(label);
+        });
+      }
+    }
+
+    //This dynamically updates the time input screen elements based on whether the allDay checkbox is checked
+    function handleAllDayChange() {
+      const allDay = document.getElementById('allDay').checked;
+      const timeDiv = document.getElementById('time');
+
+      // Clear the time div
+      timeDiv.innerHTML = '';
+
+      if (!allDay) {
+        // Dynamically create and append the start time input
+        const startTimeLabel = document.createElement('label');
+        startTimeLabel.setAttribute('for', 'startTime');
+        startTimeLabel.textContent = 'Start time: ';
+        timeDiv.appendChild(startTimeLabel);
+
+        const startTimeInput = document.createElement('input');
+        startTimeInput.type = 'time';
+        startTimeInput.id = 'startTime';
+        startTimeInput.name = 'startTime';
+        startTimeInput.value = '12:00';
+        timeDiv.appendChild(startTimeInput);
+
+        // Add a line break
+        timeDiv.appendChild(document.createElement('br'));
+
+        // Dynamically create and append the end time input
+        const endTimeLabel = document.createElement('label');
+        endTimeLabel.setAttribute('for', 'endTime');
+        endTimeLabel.textContent = 'End time: ';
+        timeDiv.appendChild(endTimeLabel);
+
+        const endTimeInput = document.createElement('input');
+        endTimeInput.type = 'time';
+        endTimeInput.id = 'endTime';
+        endTimeInput.name = 'endTime';
+        endTimeInput.value = '13:00';
+        timeDiv.appendChild(endTimeInput);
+      }
+    }
+
+    //*******Stole all this gapi stuff from the internet to get the API to work... All lines 363 to 347 are essentially magic*******
+
     /* exported gapiLoaded */
     /* exported gisLoaded */
     /* exported handleAuthClick */
@@ -142,205 +340,6 @@
       } else {
         // Skip display of account chooser and consent dialog for an existing session.
         tokenClient.requestAccessToken({ prompt: '' });
-      }
-    }
-    //End of the magic gapi stuff
-
-    //Made by Matt to add an event to the calendar, using form inputs to create and post the event using the API
-    function addEvent() {
-      //Validate date input
-      let dateLength = document.getElementById('date').value.length;
-      if (dateLength == 0) {
-        alert('ERROR: Please select a date.');
-        return;
-      }
-
-      //For Field events, get the checked checkboxes and create a string of locations
-      let locations = getLocations();
-
-      //Formats string for the summary of the event so that /Chart-Website/ can parse it correctly
-      let summaryString = document.getElementById('names').value + ' - ' + document.getElementById('eventTypes').value + (document.getElementById('eventTypes').value == "Field" && locations.length > 0 ? ' (' + locations + ')' : '');
-
-      //Create event obj, colorId is *supposed* to match the color of the event text on Chart-Website...
-      //Date formatting is done in the format YYYY-MM-DDTHH:MM:SS-04:00 for start and end times, or just YYYY-MM-DD for all day events
-      const event = {
-        summary: summaryString,
-        description: '',
-        start: {
-          dateTime: document.getElementById('allDay').checked ? null : new Date(`${document.getElementById('date').value}T${document.getElementById('startTime').value}:00-04:00`).toISOString(),
-          date: document.getElementById('allDay').checked ? document.getElementById('date').value : null
-        },
-        end: {
-          dateTime: document.getElementById('allDay').checked == true ? null : new Date(`${document.getElementById('date').value}T${document.getElementById('endTime').value}:00-04:00`).toISOString(),
-          date: document.getElementById('allDay').checked == true ? document.getElementById('date').value : null
-        },
-        colorId: document.getElementById('eventTypes').value == "Field" ? "10" : document.getElementById('eventTypes').value == "Conference" ? "5" : document.getElementById('eventTypes').value == "Off" ? "0" : document.getElementById('eventTypes').value == "Remote" ? "9" : document.getElementById('eventTypes').value == "Meeting" ? "3" : document.getElementById('eventTypes').value == "Training" ? "2" : "6",
-        attendees: [],
-        reminders: {
-        },
-      };
-
-      //Create API call 
-      const request = gapi.client.calendar.events.insert({
-        calendarId: 'c_a45d8e966d0c7524b6f84ea21df86b3d87f3575b107347c56451886b52f8a83a@group.calendar.google.com',
-        resource: event,
-      });
-
-      //Execute the API call and log the result
-      request.execute(function (event) {
-        console.log('Event created: ' + event.htmlLink);
-      });
-    }
-
-    //This dynamically updates screen elements based on the selected event type (mainly for Field event)
-    function handleEventTypeChange() {
-      const eventType = document.getElementById('eventTypes').value;
-      const locationsDiv = document.getElementById('locations');
-
-      // Clear any existing content in the locations div
-      locationsDiv.innerHTML = '';
-
-      if (eventType === "Field") {
-        locationsDiv.style.marginTop = '10px';
-        // Generate location checkboxes dynamically
-        locations.forEach(location => {
-          const label = document.createElement('label');
-          const checkbox = document.createElement('input');
-          checkbox.type = 'checkbox';
-          checkbox.name = location;
-          checkbox.id = location;
-          checkbox.value = location;
-          label.appendChild(checkbox);
-          label.appendChild(document.createTextNode(` ${location}`));
-          locationsDiv.appendChild(label);
-        });
-      }
-    }
-
-    //This dynamically updates the time input screen elements based on whether the allDay checkbox is checked
-    function handleAllDayChange() {
-      const allDay = document.getElementById('allDay').checked;
-      const timeDiv = document.getElementById('time');
-
-      // Clear the time div
-      timeDiv.innerHTML = '';
-
-      if (!allDay) {
-        // Dynamically create and append the start time input
-        const startTimeLabel = document.createElement('label');
-        startTimeLabel.setAttribute('for', 'startTime');
-        startTimeLabel.textContent = 'Start time: ';
-        timeDiv.appendChild(startTimeLabel);
-
-        const startTimeInput = document.createElement('input');
-        startTimeInput.type = 'time';
-        startTimeInput.id = 'startTime';
-        startTimeInput.name = 'startTime';
-        startTimeInput.value = '12:00';
-        timeDiv.appendChild(startTimeInput);
-
-        // Add a line break
-        timeDiv.appendChild(document.createElement('br'));
-
-        // Dynamically create and append the end time input
-        const endTimeLabel = document.createElement('label');
-        endTimeLabel.setAttribute('for', 'endTime');
-        endTimeLabel.textContent = 'End time: ';
-        timeDiv.appendChild(endTimeLabel);
-
-        const endTimeInput = document.createElement('input');
-        endTimeInput.type = 'time';
-        endTimeInput.id = 'endTime';
-        endTimeInput.name = 'endTime';
-        endTimeInput.value = '13:00';
-        timeDiv.appendChild(endTimeInput);
-      }
-    }
-
-    //This is for field locations, it gets the checked checkboxes and returns a string of the selected locations
-    function getLocations() {
-      const checkboxes = document.querySelectorAll('input[type="checkbox"]:checked');
-      const selectedLocations = Array.from(checkboxes)
-        .filter(checkbox => checkbox.id !== 'allDay') // Exclude the allDay checkbox
-        .map(checkbox => checkbox.value);
-      return selectedLocations.join(', ');
-    }
-
-    //Add peoples names here (preferably alphabetically), hyphens and all, just make sure they're accounted for in /Chart-Website/
-    const names = [
-      "Aaron McQuade",
-      "Alex Fudge",
-      "Andrew Dunlop",
-      "Andrew Lebert",
-      "Andrew Smith",
-      "Anthony Walsh",
-      "Bethany McCulloch",
-      "Brad Pilon",
-      "Corey Graveline-Dumouchel",
-      "Chris Waito",
-      "Dan Schinkel",
-      "David Priebe",
-      "Dean Cybulski",
-      "Gavin McGinley",
-      "Josh Burton",
-      "Josh Yourth",
-      "Justin Lepine",
-      "Kathy Prescott",
-      "Matt Beres",
-      "Michelle Rowe",
-      "Mitch Yackobeck",
-      "Natalie Blank-Cazabon",
-      "Sheri Larochelle",
-      "Terri-Lyn Lee",
-      "Trevor Smith",
-      "Tyler Lloyd-Gallan"
-    ];
-
-    const locations = [
-      "ADH", "ADM", "AJC", "BCH", "CEN", "CDS", "COB", "EGN", "FHS", "HRM",
-      "HVW", "KIL", "MAR", "MCS", "MCN", "MVD", "OHS", "PAL", "PVW", "QEL",
-      "RCA", "RCI", "RCIS", "RCK", "VAL", "WPS", "WZD"
-    ];
-
-    // This function generates the dynamic content for the names dropdown
-    function generateDynamicContent() {
-      // Generate names dropdown options
-      const namesSelect = document.getElementById('names');
-      names.forEach(name => {
-        const option = document.createElement('option');
-        option.value = name;
-        option.textContent = name;
-        namesSelect.appendChild(option);
-      });
-    }
-
-    // Start calling the functions after the DOM is fully loaded
-    document.addEventListener('DOMContentLoaded', () => {
-      getSeason();
-      generateDynamicContent()
-      const dateInput = document.getElementById('date');
-      const today = new Date().toISOString().split('T')[0]; // Get today's date in YYYY-MM-DD format
-      dateInput.value = today; // Set the default value to today's date
-    });
-
-    // This function determines what background should appear based on the current month
-    function getSeason() {
-      const body = document.body;
-      let checkDate = new Date();
-      let currMonth = checkDate.getMonth() + 1;
-
-      // Remove any existing season class (just in case)
-      body.classList.remove('winter', 'spring', 'summer', 'fall');
-
-      // Determine the current season and set it as the class of the body
-      if (currMonth == 12 || currMonth <= 2) {
-        body.classList.add('winter');
-      } else if (currMonth >= 3 && currMonth <= 5) {
-        body.classList.add('spring');
-      } else if (currMonth >= 6 && currMonth <= 8) {
-        body.classList.add('summer');
-      } else if (currMonth >= 9 && currMonth <= 11) {
-        body.classList.add('fall');
       }
     }
   </script>
