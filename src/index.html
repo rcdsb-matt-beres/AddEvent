@@ -34,6 +34,7 @@
         <option value="Out of Office">Out of Office</option>
         <option value="Remote">Remote</option>
         <option value="Training">Training</option>
+        <option value="Virtual Conference">Virtual Conference</option>
       </select>
     </div>
 
@@ -165,7 +166,7 @@
           dateTime: document.getElementById('allDay').checked == true ? null : new Date(`${document.getElementById('date').value}T${document.getElementById('endTime').value}:00-04:00`).toISOString(),
           date: document.getElementById('allDay').checked == true ? document.getElementById('date').value : null
         },
-        colorId: document.getElementById('eventTypes').value == "Field" ? "10" : document.getElementById('eventTypes').value == "Conference" ? "5" : document.getElementById('eventTypes').value == "Off" ? "0" : document.getElementById('eventTypes').value == "Remote" ? "9" : document.getElementById('eventTypes').value == "Meeting" ? "3" : document.getElementById('eventTypes').value == "Training" ? "2" : "6",
+        colorId: document.getElementById('eventTypes').value == "Field" ? "10" : document.getElementById('eventTypes').value == "Conference" || document.getElementById('eventTypes').value == "Virtual Conference" ? "5" : document.getElementById('eventTypes').value == "Off" ? "0" : document.getElementById('eventTypes').value == "Remote" ? "9" : document.getElementById('eventTypes').value == "Meeting" ? "3" : document.getElementById('eventTypes').value == "Training" ? "2" : "6",
         attendees: [],
         reminders: {
         },
