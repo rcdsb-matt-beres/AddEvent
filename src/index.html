@@ -121,7 +121,7 @@
         body.classList.add('spring');
       } else if (currMonth >= 6 && currMonth <= 8) {
         body.classList.add('summer');
-      } else if (currMonth == 9 || this.currMonth == 11) {
+      } else if (currMonth == 9 || currMonth == 11) {
         body.classList.add('fall');
       } else if (currMonth == 10) {
         body.classList.add('halloween');
@@ -161,11 +161,11 @@
         summary: summaryString,
         description: '',
         start: {
-          dateTime: document.getElementById('allDay').checked ? null : new Date(`${document.getElementById('date').value}T${document.getElementById('startTime').value}:00-04:00`).toISOString(),
+          dateTime: document.getElementById('allDay').checked ? null : new Date(`${document.getElementById('date').value}T${document.getElementById('startTime').value}:00-05:00`).toISOString(),
           date: document.getElementById('allDay').checked ? document.getElementById('date').value : null
         },
         end: {
-          dateTime: document.getElementById('allDay').checked == true ? null : new Date(`${document.getElementById('date').value}T${document.getElementById('endTime').value}:00-04:00`).toISOString(),
+          dateTime: document.getElementById('allDay').checked == true ? null : new Date(`${document.getElementById('date').value}T${document.getElementById('endTime').value}:00-05:00`).toISOString(),
           date: document.getElementById('allDay').checked == true ? document.getElementById('date').value : null
         },
         colorId: document.getElementById('eventTypes').value == "Field" ? "10" : document.getElementById('eventTypes').value == "Conference" || document.getElementById('eventTypes').value == "Virtual Conference" ? "5" : document.getElementById('eventTypes').value == "Off" ? "0" : document.getElementById('eventTypes').value == "Remote" ? "9" : document.getElementById('eventTypes').value == "Meeting" ? "3" : document.getElementById('eventTypes').value == "Training" ? "2" : "6",
